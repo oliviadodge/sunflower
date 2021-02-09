@@ -27,6 +27,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.observe
 import com.google.samples.apps.sunflower.adapters.PlantAdapter
+import com.google.samples.apps.sunflower.data.Plant
 import com.google.samples.apps.sunflower.databinding.FragmentPlantListBinding
 import com.google.samples.apps.sunflower.viewmodels.PlantListViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -44,11 +45,8 @@ class PlantListFragment : Fragment() {
         val binding = FragmentPlantListBinding.inflate(inflater, container, false)
         context ?: return binding.root
 
-        val adapter = PlantAdapter()
-        binding.plantList.adapter = adapter
-        subscribeUi(adapter)
+        subscribeUi(binding)
 
-        setHasOptionsMenu(true)
         return binding.root
     }
 
@@ -66,10 +64,19 @@ class PlantListFragment : Fragment() {
         }
     }
 
-    private fun subscribeUi(adapter: PlantAdapter) {
+    private fun subscribeUi(binding: FragmentPlantListBinding) {
+
+        val adapter = PlantAdapter()
+        binding.plantList.adapter = adapter
+
         viewModel.plants.observe(viewLifecycleOwner) { plants ->
             adapter.submitList(plants)
         }
+
+        viewModel.hasOptionsMenu.observe(viewLifecycleOwner) { hasOptionsMenu ->
+            setHasOptionsMenu(hasOptionsMenu)
+        }
+
     }
 
     private fun updateData() {

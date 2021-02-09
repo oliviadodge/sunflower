@@ -16,11 +16,7 @@
 
 package com.google.samples.apps.sunflower.viewmodels
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.google.samples.apps.sunflower.PlantListFragment
 import com.google.samples.apps.sunflower.data.Plant
 import com.google.samples.apps.sunflower.data.PlantRepository
@@ -51,6 +47,10 @@ class PlantListViewModel @Inject internal constructor(
             plantRepository.getPlantsWithGrowZoneNumber(zone)
         }
     }.asLiveData()
+
+    val hasOptionsMenu by lazy {
+        MutableLiveData<Boolean>().apply { value = true }
+    }
 
     init {
 
