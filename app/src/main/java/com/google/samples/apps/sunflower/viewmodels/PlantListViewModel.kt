@@ -48,9 +48,7 @@ class PlantListViewModel @Inject internal constructor(
         }
     }.asLiveData()
 
-    val hasOptionsMenu by lazy {
-        MutableLiveData<Boolean>().apply { value = true }
-    }
+    val hasOptionsMenu = MutableLiveData<Boolean>().apply { value = true }
 
     init {
 
